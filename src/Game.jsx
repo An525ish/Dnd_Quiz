@@ -33,27 +33,33 @@ const Game = () => {
         setChecks(generateChecks());
     }, []);
 
-    const handleDragEnd = () => {
-        const newNumbers = [...numbers];
-        const dragbox = newNumbers[dragItem.current]
-        newNumbers.splice(dragItem.current, 1);
-        newNumbers.splice(dragOverItem.current, 0, dragbox)
-        dragItem.current = null;
-        dragOverItem.current = null;
-        setNumbers(newNumbers);
-    }
-
-    const handleDragStart = (e, index) => {
+    const handleDragStart = (index) => {
         dragItem.current = index;
-        // e.dataTransfer.setData('id', index);
+    }
+    const handleDragEnter = (index) => {
+        dragOverItem.current = index
     }
 
-    // const handleDragEnter = (index) => {
-    //     dragOverItem.current = index;
-    //     const newNumbers = [...numbers];
-    //     newNumbers.splice(dragItem.current, 1);
-    //     setNumbers(newNumbers);
-    // }
+    const handleDragEnd = (e) => {
+        if (e.target.tagName === 'LI') {
+            const newNumbers = [...numbers];
+            const dragbox = newNumbers[dragItem.current]
+            newNumbers.splice(dragItem.current, 1);
+            newNumbers.splice(dragOverItem.current, 0, dragbox)
+            dragItem.current = null;
+            dragOverItem.current = null;
+            setNumbers(newNumbers);
+        }
+        else {
+            const newChecks = [...checks];
+            const dragbox = newChecks[dragItem.current]
+            newChecks.splice(dragItem.current, 1);
+            newChecks.splice(dragOverItem.current, 0, dragbox)
+            dragItem.current = null;
+            dragOverItem.current = null;
+            setChecks(newChecks);
+        }
+    }
 
     const handleDragOver = (e, index) => {
         e.preventDefault();
@@ -63,16 +69,14 @@ const Game = () => {
 
     const handleDrop = (e) => {
         console.log('dropped')
-        // const dataId = e.dataTransfer.getData('id');
-        // console.log(dataId)
         const newChecks = [...checks];
         const dragbox = numbers[dragItem.current]
         if (dragbox) {
             numbers.splice(dragItem.current, 1);
             newChecks.splice(dragCheck.current, 1);
             newChecks.splice(dragCheck.current, 0, dragbox)
-            // dragItem.current = null;
-            // dragOverItem.current = null;
+            dragItem.current = null;
+            dragCheck.current = null;
             setChecks(newChecks);
         }
     }
@@ -110,6 +114,10 @@ const Game = () => {
                             className="orderCheckItems"
                             onDragOver={(e) => handleDragOver(e, index)}
                             onDrop={(e) => handleDrop(e)}
+
+                            onDragStart={() => handleDragStart(index)}
+                            onDragEnter={() => handleDragEnter(index)}
+                            onDragEnd={(e) => handleDragEnd(e)}
                         >
                             {checks}
                         </div>
@@ -120,10 +128,10 @@ const Game = () => {
                         <List
                             key={number}
                             id={number}
-                            onDragStart={(e) => handleDragStart(e, index)}
+                            onDragStart={() => handleDragStart(index)}
                             // onDragEnter={()=>handleDragEnter(index)}
                             onDragEnter={() => dragOverItem.current = index}
-                            onDragEnd={handleDragEnd}
+                            onDragEnd={(e) => handleDragEnd(e)}
                         >
                             {number}
                         </List>
