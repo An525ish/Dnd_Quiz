@@ -1,0 +1,60 @@
+
+  
+  .main-heading {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 10px;
+    font-family: cursive;
+    text-transform: capitalize;
+  }
+  
+  .game-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 80vh;
+  }
+
+  .orderCheckContainer{
+    display: flex;
+    gap : 1rem;
+  }
+
+  .orderCheckItems{
+    width: 6rem;
+    height: 4rem;
+    border : 1px solid #ccc;
+    padding: 10px;
+
+  }
+
+  .list-container {
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+    gap : 1rem;
+  }
+
+  .remark > p{
+    font-size: 2rem;
+  }
+
+  .btn-controls{
+    display: flex;
+    gap : 1rem;
+    text-align: center;
+  }
+  
+  p {
+    margin-bottom: 10px;
+  }
+  
+  .correct {
+    color: green;
+  }
+  
+  .incorrect {
+    color: red;
+  }
+  
