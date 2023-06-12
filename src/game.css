@@ -22,10 +22,12 @@
   }
 
   .orderCheckItems{
-    width: 6rem;
-    height: 4rem;
+    width: 5rem;
+    height: 5rem;
     border : 1px solid #ccc;
-    padding: 10px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
 
   }
 

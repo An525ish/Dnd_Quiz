@@ -22,7 +22,7 @@ const Game = () => {
     };
 
     const generateChecks = () => {
-        const randomChecks = Array(5).fill(0).map(() => null);
+        const randomChecks = Array(5).fill(0).map(() => 'Drop');
         return randomChecks;
     };
 
@@ -67,7 +67,7 @@ const Game = () => {
         console.log('dragging')
     }
 
-    const handleDrop = (e) => {
+    const handleDrop = () => {
         console.log('dropped')
         const newChecks = [...checks];
         const dragbox = numbers[dragItem.current]
