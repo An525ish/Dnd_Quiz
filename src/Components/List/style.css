@@ -3,9 +3,14 @@
     width : 6rem;
     margin-bottom: 10px;
     padding: 10px;
-    cursor: move;
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
     display: flex;
     align-items: center;
     gap : .5rem;
     font-size: 1.5rem;
+  }
+
+  .list-item:active{
+    cursor: grabbing;
   }

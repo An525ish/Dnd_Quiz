@@ -16,6 +16,12 @@ const Game = () => {
 
     const sortedNumbers = checks.slice().sort((a, b) => a - b);
 
+    // const onlyNumbers = (array) => {
+    //     return array.every(element => {
+    //         return typeof element === 'number';
+    //     });
+    // }
+
     const generateNumbers = () => {
         const randomNumbers = Array(5).fill().map(() => Math.round(Math.random() * 1000));
         return randomNumbers;
@@ -33,9 +39,11 @@ const Game = () => {
         setChecks(generateChecks());
     }, []);
 
-    const handleDragStart = (index) => {
+    const handleDragStart = (e, index) => {
         dragItem.current = index;
+        e.dataTransfer.setData("type", e.target.tagName);
     }
+
     const handleDragEnter = (index) => {
         dragOverItem.current = index
     }
@@ -46,18 +54,18 @@ const Game = () => {
             const dragbox = newNumbers[dragItem.current]
             newNumbers.splice(dragItem.current, 1);
             newNumbers.splice(dragOverItem.current, 0, dragbox)
-            dragItem.current = null;
+            // dragItem.current = null;
             dragOverItem.current = null;
             setNumbers(newNumbers);
         }
         else {
             const newChecks = [...checks];
-            const dragbox = newChecks[dragItem.current]
-            newChecks.splice(dragItem.current, 1);
+            const dragbox = newChecks[dragItem.current];
+            newChecks.splice(dragItem.current, 1)
             newChecks.splice(dragOverItem.current, 0, dragbox)
             dragItem.current = null;
             dragOverItem.current = null;
-            setChecks(newChecks);
+            setChecks(newChecks)
         }
     }
 
@@ -67,18 +75,27 @@ const Game = () => {
         console.log('dragging')
     }
 
-    const handleDrop = () => {
-        console.log('dropped')
+    const handleDrop = (e) => {
+        // e.preventDefault();
+        let contentType = e.dataTransfer.getData("type");
+        console.log(contentType)
         const newChecks = [...checks];
-        const dragbox = numbers[dragItem.current]
+        const dragbox = contentType==='LI' && numbers[dragItem.current];
+        // console.log(e.target)
+        // console.log(dragbox)
         if (dragbox) {
-            numbers.splice(dragItem.current, 1);
+            contentType==='LI' && numbers.splice(dragItem.current, 1);
             newChecks.splice(dragCheck.current, 1);
             newChecks.splice(dragCheck.current, 0, dragbox)
-            dragItem.current = null;
+            // dragItem.current = null;
             dragCheck.current = null;
             setChecks(newChecks);
         }
+        console.log('dropped')
+        // else {
+        //     dragItem.current = null;
+        //     dragCheck.current = null;
+        // }
     }
 
     const handleReset = () => {
@@ -90,7 +107,7 @@ const Game = () => {
     }
 
     useEffect(() => {
-        const answer = checks.includes(null) ? false : sortedNumbers.toString() === checks.toString();
+        const answer = checks.includes('Drop') ? false : sortedNumbers.toString() === checks.toString();
         setIsCorrect(answer);
     }, [checks])
 
@@ -115,7 +132,7 @@ const Game = () => {
                             onDragOver={(e) => handleDragOver(e, index)}
                             onDrop={(e) => handleDrop(e)}
 
-                            onDragStart={() => handleDragStart(index)}
+                            onDragStart={(e) => handleDragStart(e, index)}
                             onDragEnter={() => handleDragEnter(index)}
                             onDragEnd={(e) => handleDragEnd(e)}
                         >
@@ -128,9 +145,8 @@ const Game = () => {
                         <List
                             key={number}
                             id={number}
-                            onDragStart={() => handleDragStart(index)}
-                            // onDragEnter={()=>handleDragEnter(index)}
-                            onDragEnter={() => dragOverItem.current = index}
+                            onDragStart={(e) => handleDragStart(e, index)}
+                            onDragEnter={() => handleDragEnter(index)}
                             onDragEnd={(e) => handleDragEnd(e)}
                         >
                             {number}
