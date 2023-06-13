@@ -9,8 +9,16 @@
     align-items: center;
     gap : .5rem;
     font-size: 1.5rem;
+    transition: .5s ease-in-out;
   }
 
   .list-item:active{
     cursor: grabbing;
+    scale : 0;
+    border: none;
+    border-radius: 50%;
+  }
+
+  .list-item:active .icon{
+    display: none;
   }

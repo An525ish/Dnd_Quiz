@@ -73,6 +73,9 @@ const Game = () => {
         e.preventDefault();
         dragCheck.current = index
         console.log('dragging')
+        // if (e.target.innerText !== 'Drop') {
+        //     e.target.style.cursor = "no-move";
+        // }
     }
 
     const handleDrop = (e) => {
@@ -80,11 +83,12 @@ const Game = () => {
         let contentType = e.dataTransfer.getData("type");
         console.log(contentType)
         const newChecks = [...checks];
-        const dragbox = contentType==='LI' && numbers[dragItem.current];
-        // console.log(e.target)
-        // console.log(dragbox)
-        if (dragbox) {
-            contentType==='LI' && numbers.splice(dragItem.current, 1);
+        const dragbox = contentType === 'LI' && numbers[dragItem.current];
+        console.log();
+        // e.target.innerText !== 'Drop' ? e.target.setAttribute('draggable', 'false') : null;
+        console.log(e.target.getAttribute('draggable'));
+        if (dragbox && e.target.innerText === 'Drop') {
+            contentType === 'LI' && numbers.splice(dragItem.current, 1);
             newChecks.splice(dragCheck.current, 1);
             newChecks.splice(dragCheck.current, 0, dragbox)
             // dragItem.current = null;
@@ -122,6 +126,11 @@ const Game = () => {
     return (
         <div className="container">
             <h1 className="main-heading">Sort the numbers in Ascending Order</h1>
+            <div className="watermark">
+                <div className="watermark__inner">
+                    <div className="watermark__body">Drag&Drop</div>
+                </div>
+            </div>
             <div className="game-wrapper">
                 <div className="orderCheckContainer">
                     {checks.map((checks, index) => (

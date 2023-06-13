@@ -9,7 +9,7 @@ const List = ({ children, onDragStart, onDragEnter, onDragEnd }) => {
       onDragEnter={onDragEnter}
       onDragEnd={onDragEnd}
     >
-      <MdDragIndicator /> {children}
+      <MdDragIndicator className='icon'/> {children}
     </li>
   )
 }

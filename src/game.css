@@ -28,6 +28,8 @@
     border-radius: 50%;
     display: grid;
     place-items: center;
+    font-size: 1.3rem;
+    font-weight: bold;
   }
 
   .list-container {
@@ -59,3 +61,27 @@
     color: red;
   }
   
+  .watermark {
+    position: relative;
+    top : 16rem;
+    z-index: -1;
+}
+
+.watermark__inner {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.watermark__body {
+    color: rgba(0, 0, 0, 0.1);
+    font-size: clamp(7rem, 10vw, 10rem);
+    font-weight: bold;
+    text-transform: uppercase;
+    transform: rotate(-30deg);
+    user-select: none;
+}
+
